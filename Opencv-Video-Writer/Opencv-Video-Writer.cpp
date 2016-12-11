@@ -20,6 +20,11 @@ string intToString(int number){
 int main(int argc, char* argv[])
 {
 
+	bool recording = false;
+	bool startNewRecording = false;
+	bool firstRun = true;
+	int videoNumber = 0;
+
 	VideoCapture cap(0); // open the video camera no. 0
 
 	cv::VideoWriter writer;
@@ -33,10 +38,6 @@ int main(int argc, char* argv[])
 	char* windowName = "Webcam Feed";
 	namedWindow(windowName, CV_WINDOW_AUTOSIZE); //create a window to display our webcam feed
 
-	//filename string
-
-	string filename = "D:\myVideo.avi";
-
 	//fourcc integer
 
 	int fcc = CV_FOURCC('D', 'I', 'V', '3');
@@ -49,20 +50,21 @@ int main(int argc, char* argv[])
 
 	cv::Size frameSize(cap.get(CV_CAP_PROP_FRAME_WIDTH), cap.get(CV_CAP_PROP_FRAME_HEIGHT));
 
-	writer = VideoWriter(filename, fcc, fps, frameSize);
 
-	if (!writer.isOpened())
-	{
-		cout << "ERROR OPENING FILE FOR WRITE"<<endl;
-		getchar();
-		
-		return -1;
-	}
-	 
 	Mat frame; 
 
 
 	while (1) {
+
+		if (startNewRecording == true)
+		{
+ 
+			startNewRecording = false;
+			recording = true;
+
+			//videoNumber++;
+
+		}
 
 		bool bSuccess = cap.read(frame); // read a new frame from camera feed
 
@@ -73,7 +75,12 @@ int main(int argc, char* argv[])
 		}
 
 
-		writer.write(frame);
+		if (recording == true)
+		{
+			writer.write(frame);
+
+			putText(frame, "REC", Point(0, 60), 2, 2, Scalar(0, 0, 255));
+		}
 
 		imshow(windowName, frame); //show the frame in "MyVideo" window
 
@@ -84,6 +91,52 @@ int main(int argc, char* argv[])
 			//'esc' has been pressed (ASCII value for 'esc' is 27)
 			//exit program.
 			return 0;
+
+		case 114:
+			//r button is pressed
+				//toggle recording
+
+			recording = !recording;
+
+			if (recording == true) cout << "Begin Recording" << endl;
+			else cout << "Recording Paused" << endl;
+
+				//insert code here
+
+			if (firstRun)
+			{
+
+				//filename string
+
+				string filename = "D:\myVideo0.avi";
+				writer = VideoWriter(filename, fcc, fps, frameSize);
+
+				if (!writer.isOpened())
+				{
+					cout << "ERROR OPENING FILE FOR WRITE" << endl;
+					getchar();
+
+					return -1;
+				}
+
+			}
+
+			break;
+
+		case 110:
+			//n button is pressed
+
+				//start new recording
+
+			startNewRecording = true;
+
+			cout << "New Recording started" << endl;
+
+			if (firstRun == true) firstRun = false;
+
+				//insert code here
+
+			break;
 
 		}
 
