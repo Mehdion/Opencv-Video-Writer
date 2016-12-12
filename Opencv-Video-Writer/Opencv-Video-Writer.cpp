@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
 
 	//frames per sec integer
 
-	int fps = 10;
+	int fps = 20;
 
 	//frame size
 
