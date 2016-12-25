@@ -40,11 +40,26 @@ int main(int argc, char* argv[])
 
 	//fourcc integer
 
-	int fcc = CV_FOURCC('D', 'I', 'V', '3');
+		//int fcc = CV_FOURCC('P', 'I', 'M', '1');   // = MPEG - 1 codec
+
+		//int fcc = CV_FOURCC('M', 'J', 'P', 'G'); //= motion - jpeg codec(does not work well)
+
+		//int fcc = CV_FOURCC('M', 'P', '4', '2'); //= MPEG - 4.2 codec
+
+		//int fcc = CV_FOURCC('D', 'I', 'V', '3'); //= MPEG - 4.3 codec
+
+		int fcc = CV_FOURCC('D', 'I', 'V', 'X'); //= MPEG - 4 codec
+
+		//int fcc = CV_FOURCC('U', '2', '6', '3'); //= H263 codec
+
+		//int fcc = CV_FOURCC('I', '2', '6', '3'); //= H263I codec
+
+		//int fcc = CV_FOURCC('F', 'L', 'V', '1'); //= FLV1 codec
 
 	//frames per sec integer
 
-	int fps = 4;
+	int fps = 10;
+	//int fps = int(cap.get(CV_CAP_PROP_FPS));
 
 	//frame size
 
